@@ -7,7 +7,7 @@ namespace EngyneCreations.SSV.Variables.Editor {
     [UnityEditor.CustomPropertyDrawer(typeof(StringReference))]
     public class StringReferenceDrawer : SerializedSharedReferenceDrawer {
 
-        [UnityEditor.MenuItem(SerializedSharedVariablesEditor.MenuItemCreatePath + "String")]
+        [UnityEditor.MenuItem(SerializedSharedVariables.MenuItemCreatePath + "String")]
         public static void CreateAsset() {
             SerializedVariablesHelper.CreateAsset<StringVariable>();
         }
