@@ -89,7 +89,7 @@ namespace EngyneCreations.SSV.Editor {
             File.WriteAllText(scriptFile, sb.ToString(), Encoding.UTF8);
 	        
 	        string relativePath = "Assets/" + SerializedSharedVariables.GeneratedDrawersPath + referenceDrawerClass + ".cs";
-	        relativePath = relativePath.Replace(@"\\", @"\"); // Thanks Microsoft
+	        relativePath = relativePath.Replace(@"//", @"/"); // Thanks Microsoft
 	        AssetDatabase.ImportAsset(relativePath);
         }
 
