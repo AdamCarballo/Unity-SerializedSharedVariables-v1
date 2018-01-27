@@ -7,7 +7,7 @@ namespace EngyneCreations.SSV.Variables.Editor {
     [UnityEditor.CustomPropertyDrawer(typeof(Int32Reference))]
     public class Int32ReferenceDrawer : SerializedSharedReferenceDrawer {
 
-        [UnityEditor.MenuItem(SerializedSharedVariables.MenuItemCreatePath + "Int32", false, 0)]
+        [UnityEditor.MenuItem(SerializedSharedVariables.MenuItemCreatePath + "Int32", false, 100)]
         public static void CreateAsset() {
             SerializedVariablesHelper.CreateAsset<Int32Variable>();
         }
