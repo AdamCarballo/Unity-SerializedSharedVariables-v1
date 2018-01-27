@@ -11,6 +11,7 @@
  */
 
 using System;
+using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace EngyneCreations.SSV.Editor {
             string referenceClass = typeName + "Reference";
 
             // The generated filepath
-            string scriptFile = Application.dataPath + "/SOVariables/GeneratedVariables/" + variableClass + ".cs";
+            string scriptFile = Application.dataPath + SerializedSharedVariables.GeneratedVariablesPath + variableClass + ".cs";
 
             // The class string
             StringBuilder sb = new StringBuilder();
@@ -46,9 +47,12 @@ namespace EngyneCreations.SSV.Editor {
             sb.AppendLine("}");
 
             // Writes the class and imports it so it is visible in the Project window
-            System.IO.File.Delete(scriptFile);
-            System.IO.File.WriteAllText(scriptFile, sb.ToString(), Encoding.UTF8);
-            AssetDatabase.ImportAsset("Assets/SOVariables/GeneratedVariables/" + variableClass + ".cs");
+            File.Delete(scriptFile);
+            File.WriteAllText(scriptFile, sb.ToString(), Encoding.UTF8);
+	        
+	        string relativePath = "Assets/" + SerializedSharedVariables.GeneratedVariablesPath + variableClass + ".cs";
+	        relativePath = relativePath.Replace(@"//", @"/"); // Thanks Microsoft
+	        AssetDatabase.ImportAsset(relativePath);
         }
 
         public static void GenerateNewVariableEditor(Type type) {
@@ -59,7 +63,7 @@ namespace EngyneCreations.SSV.Editor {
             string referenceDrawerClass = referenceClass + "Drawer";
 
             // The generated filepath
-            string scriptFile = Application.dataPath + "/SOVariables/Editor/GeneratedDrawers/" + referenceDrawerClass + ".cs";
+            string scriptFile = Application.dataPath + SerializedSharedVariables.GeneratedDrawersPath + referenceDrawerClass + ".cs";
 
             // The class string
             StringBuilder sb = new StringBuilder();
@@ -73,7 +77,7 @@ namespace EngyneCreations.SSV.Editor {
 
             sb.AppendLine("    public class " + referenceDrawerClass + " : SerializedSharedReferenceDrawer {");
             sb.AppendLine("");
-            sb.AppendLine("        [UnityEditor.MenuItem(SerializedSharedVariablesEditor.MenuItemCreatePath + \"" + typeName + "\", false, 100)]");
+            sb.AppendLine("        [UnityEditor.MenuItem(SerializedSharedVariables.MenuItemCreatePath + \"" + typeName + "\", false, 100)]");
             sb.AppendLine("        public static void CreateAsset() {");
             sb.AppendLine("            SerializedVariablesHelper.CreateAsset<" + variableClass + ">();");
             sb.AppendLine("        }");
@@ -81,9 +85,12 @@ namespace EngyneCreations.SSV.Editor {
             sb.AppendLine("}");
 
             // Writes the class and imports it so it is visible in the Project window
-            System.IO.File.Delete(scriptFile);
-            System.IO.File.WriteAllText(scriptFile, sb.ToString(), Encoding.UTF8);
-            AssetDatabase.ImportAsset("Assets/SOVariables/Editor/GeneratedDrawers/" + referenceDrawerClass + ".cs");
+            File.Delete(scriptFile);
+            File.WriteAllText(scriptFile, sb.ToString(), Encoding.UTF8);
+	        
+	        string relativePath = "Assets/" + SerializedSharedVariables.GeneratedDrawersPath + referenceDrawerClass + ".cs";
+	        relativePath = relativePath.Replace(@"\\", @"\"); // Thanks Microsoft
+	        AssetDatabase.ImportAsset(relativePath);
         }
 
         private static string FirstLetterToUpper(string str) {

@@ -13,7 +13,14 @@ namespace EngyneCreations.SSV.Editor {
 
     public static class SerializedSharedVariables {
 
+        // Path where generated variables will appear on the Assets/Create menu
         public const string MenuItemCreatePath = "Assets/Create/Engyne Creations/Serialized Shared Variables/";
+        
+        // Path where generated variables scripts will be created. Don't include /Assets
+        public const string GeneratedVariablesPath = "/EngyneCreations/SerializedSharedVariables/Generated/";
+        
+        // Path where generated drawers scripts will be created. Don't include /Assets
+        public const string GeneratedDrawersPath = "/EngyneCreations/SerializedSharedVariables/Generated/Editor/";
 
         
         [MenuItem(MenuItemCreatePath + "Generate New Variable", false, 111)]
@@ -25,7 +32,10 @@ namespace EngyneCreations.SSV.Editor {
             Type type = typeof(int);
             //////////////////////////////////////////////////////
 
+            // Generate Scriptable Object script
             SerializedSharedVariablesGenerator.GenerateNewVariableData(type);
+            
+            // Generate Property Drawer script
 	        SerializedSharedVariablesGenerator.GenerateNewVariableEditor(type);
         }
     }
