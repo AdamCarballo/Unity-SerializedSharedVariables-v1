@@ -25,7 +25,7 @@ namespace EngyneCreations.SSV.Editor {
         public static void GenerateNewVariableData(Type type) {
 
             string typeName = FirstLetterToUpper(type.Name);
-            string typeFullName = typeof(int).FullName;
+            string typeFullName = type.FullName;
             string variableClass = typeName + "Variable";
             string referenceClass = typeName + "Reference";
 
