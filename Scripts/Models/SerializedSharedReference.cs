@@ -6,36 +6,47 @@
  * SerializedSharedReference
  * Base class to work with SSV. This is the class drawn in the inspector.
  *
- * by Adam Carballo (AdamEC).
- * https://github.com/AdamEC/Unity-SerializedSharedVariables
+ * by Adam Carballo (AdamCarballo).
+ * https://github.com/AdamCarballo/Unity-SerializedSharedVariables
  */
 
+using JetBrains.Annotations;
+using UnityEngine;
+
 namespace EngyneCreations.SSV.Models {
+	public abstract class SerializedSharedReference<TV, TT> where TV : SerializedSharedVariable<TT> {
 
-    public abstract class SerializedSharedReference <V, T> where V : SerializedSharedVariable<T> {
+		[UsedImplicitly]
+		[SerializeField]
+		private bool _useConstant = true;
+		
+		[UsedImplicitly]
+		[SerializeField]
+		private TT _constantValue;
 
-        public bool UseConstant = true;
-        public T ConstantValue;
-        public V Variable;
+		[UsedImplicitly]
+		[SerializeField]
+		private TV _variable;
 
 
-        public virtual T Value {
-            get { return UseConstant ? ConstantValue : Variable.Value; }
-            set {
-                if (UseConstant) {
-                    ConstantValue = value;
-                } else {
-                    Variable.Value = value;
-                }
-            }
-        }
+		public virtual TT Value {
+			get => _useConstant ? _constantValue : _variable.Value;
+			set {
+				if (_useConstant) {
+					_constantValue = value;
+				} else {
+					_variable.Value = value;
+				}
+			}
+		}
 
-        public SerializedSharedReference(T defaultConstantValue) {
-            ConstantValue = defaultConstantValue;
-        }
+		public SerializedSharedReference(TT defaultConstantValue) {
+			_constantValue = defaultConstantValue;
+		}
 
-        public SerializedSharedReference(bool loadUsingConstant = true) {
-            UseConstant = loadUsingConstant;
-        }
-    }
+		public SerializedSharedReference(bool loadUsingConstant = true) {
+			_useConstant = loadUsingConstant;
+		}
+
+	}
 }

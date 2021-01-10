@@ -4,10 +4,10 @@
 
 /*
  * InspectorTest
- * Demostration of how SSV are drawn on the inspector
+ * Demonstration of how SSV are drawn on the inspector
  *
- * by Adam Carballo (AdamEC).
- * https://github.com/AdamEC/Unity-SerializedSharedVariables
+ * by Adam Carballo (AdamCarballo).
+ * https://github.com/AdamCarballo/Unity-SerializedSharedVariables
  */
 
 using EngyneCreations.SSV.Variables;

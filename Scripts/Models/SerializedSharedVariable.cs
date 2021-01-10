@@ -6,32 +6,34 @@
  * SerializedSharedVariable
  * Base class of SSV.
  *
- * by Adam Carballo (AdamEC).
- * https://github.com/AdamEC/Unity-SerializedSharedVariables
+ * by Adam Carballo (AdamCarballo).
+ * https://github.com/AdamCarballo/Unity-SerializedSharedVariables
  */
 
 using System;
 using UnityEngine;
 
 namespace EngyneCreations.SSV.Models {
+	public abstract class SerializedSharedVariable<T> : ScriptableObject {
 
-    public abstract class SerializedSharedVariable <T> : ScriptableObject {
+		[SerializeField]
+		private T _value;
 
-        [SerializeField] protected T _value;
-        [NonSerialized] protected T _currentValue;
+		[NonSerialized]
+		private T _currentValue;
 
+		public virtual T Value {
+			get => _currentValue;
+			set => _currentValue = value;
+		}
 
-        public virtual T Value {
-            get { return _currentValue; }
-            set { _currentValue = value; }
-        }
+		protected virtual void OnValidate() {
+			_currentValue = _value;
+		}
 
-        protected virtual void OnValidate() {
-            _currentValue = _value;
-        }
+		protected virtual void OnEnable() {
+			_currentValue = _value;
+		}
 
-        protected virtual void OnEnable() {
-            _currentValue = _value;
-        }
-    }
+	}
 }

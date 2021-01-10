@@ -6,8 +6,8 @@
  * CustomClass
  * Simple custom class to demostrate the use of custom classes with generated SSV
  *
- * by Adam Carballo (AdamEC).
- * https://github.com/AdamEC/Unity-SerializedSharedVariables
+ * by Adam Carballo (AdamCarballo).
+ * https://github.com/AdamCarballo/Unity-SerializedSharedVariables
  */
 
 using EngyneCreations.SSV.Variables;
