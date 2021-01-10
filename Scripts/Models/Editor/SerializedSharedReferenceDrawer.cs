@@ -17,7 +17,15 @@ using UnityEngine;
 
 namespace EngyneCreations.SSV.Models.Editor {
 	public abstract class SerializedSharedReferenceDrawer : PropertyDrawer {
+		
+		/// <summary>
+		/// Path where generated variables will appear on the Assets/Create menu.
+		/// </summary>
+		public const string MenuItemCreatePath = "Assets/Create/Serialized Shared Variables/";
 
+		/// <summary>
+		/// GUID of the dropdown icon to load without the need of a known path
+		/// </summary>
 		private const string DropdownIconGuid = "258165f075bc7d345bb55cf2583a8eda";
 
 		protected SerializedProperty UseConstantProperty = null;
