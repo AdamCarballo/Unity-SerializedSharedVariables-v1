@@ -30,10 +30,24 @@ namespace EngyneCreations.SSV.Models {
 		protected virtual void OnValidate() {
 			_currentValue = _value;
 		}
-
+		
 		protected virtual void OnEnable() {
 			_currentValue = _value;
+			
+#if UNITY_EDITOR
+			// Fix issues with Fast Load (Scene Reload)
+			UnityEditor.EditorApplication.playModeStateChanged -= OnEnterPlayMode;
+			UnityEditor.EditorApplication.playModeStateChanged += OnEnterPlayMode;
+#endif
 		}
+		
+#if UNITY_EDITOR
+		private void OnEnterPlayMode(UnityEditor.PlayModeStateChange playMode) {
+			if (playMode != UnityEditor.PlayModeStateChange.ExitingPlayMode) return;
+			
+			_currentValue = _value;
+		}
+#endif
 
 	}
 }
