@@ -41,8 +41,10 @@ namespace EngyneCreations.SSV.Models.Editor {
 			ConstantValue = property.FindPropertyRelative("_constantValue");
 			Variable = property.FindPropertyRelative("_variable");
 
-			var copyConstantValue = ConstantValue.Copy();
-			_amountOfProperties = copyConstantValue.CountInProperty() - 1;
+			if (ConstantValue != null) {
+				var copyConstantValue = ConstantValue.Copy();
+				_amountOfProperties = copyConstantValue.CountInProperty() - 1;
+			}
 
 			PopupStyle = new GUIStyle(EditorStyles.label);
 			PopupStyle.focused.textColor = PopupStyle.normal.textColor = new Color(0, 0, 0, 0);
@@ -70,23 +72,28 @@ namespace EngyneCreations.SSV.Models.Editor {
 			UseConstantProperty.boolValue = EditorGUI.Popup(popupPos, Convert.ToInt32(UseConstantProperty.boolValue),
 				new[] {"Use Variable", "Use Constant"}, PopupStyle) != 0;
 
-			if (HasMultipleProperties()) {
-				ConstantValue.isExpanded = true;
-
-				bool accessChildren = true;
-				int index = _amountOfProperties;
-				while (ConstantValue.NextVisible(accessChildren) && index > 0) {
-					index--;
-
-					EditorGUI.PropertyField(variableMultiplePos, ConstantValue, false);
-					variableMultiplePos.y += 18;
-
-					accessChildren = ConstantValue.isArray && ConstantValue.isExpanded;
-				}
+			if (ConstantValue == null && UseConstantProperty.boolValue) {
+				// If it's a non-serializable type this will be null
+				EditorGUI.LabelField(variablePos, " Non-serializable type");
 			} else {
-				// Draw variable field
-				EditorGUI.PropertyField(HasMultipleProperties() ? variableMultiplePos : variablePos,
-					UseConstantProperty.boolValue ? ConstantValue : Variable, GUIContent.none, true);
+				if (HasMultipleProperties()) {
+					ConstantValue.isExpanded = true;
+
+					bool accessChildren = true;
+					int index = _amountOfProperties;
+					while (ConstantValue.NextVisible(accessChildren) && index > 0) {
+						index--;
+
+						EditorGUI.PropertyField(variableMultiplePos, ConstantValue, false);
+						variableMultiplePos.y += 18;
+
+						accessChildren = ConstantValue.isArray && ConstantValue.isExpanded;
+					}
+				} else {
+					// Draw variable field
+					EditorGUI.PropertyField(HasMultipleProperties() ? variableMultiplePos : variablePos,
+						UseConstantProperty.boolValue ? ConstantValue : Variable, GUIContent.none, true);
+				}
 			}
 
 			EditorGUI.EndProperty();

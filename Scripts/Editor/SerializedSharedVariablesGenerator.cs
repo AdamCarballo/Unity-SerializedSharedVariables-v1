@@ -13,6 +13,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -86,6 +87,7 @@ namespace EngyneCreations.SSV.Editor {
 		
 		private static string ExtractTypeNameFromFullName(string fullName) {
 			var name = !fullName.Contains(".") ? fullName : fullName.Split('.').Last();
+			name = new Regex("[^a-zA-Z0-9 -]").Replace(name, string.Empty);
 			return name.FirstLetterToUpper();
 		}
 		
